@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    {% include 'allcss.html' %}
+</head>
+<body>
+
+    <div class="main__body">
+        <div class="feed">
+        <div style="width:50% ; text-align:center; height:50px ;padding:4px"class="post"> <h2>comment</h2></div>
+        {% for comment in allcomments %} 
+    
+        <div  style="width:50%"class="post">
+        <div  class="post__top">
+            <img style="width:100px; height:100px"class="user__avatar post__avatar"
+               src="{{comment.userId.avatar.url}}"
+                alt="" />
+    
+          
+    
+            <div  style="margin-left:20px"class="post__topInfo">
+                
+        
+               
+                    
+                   <span> <b>{{comment.userId.username}}</b> <div></div> {{comment.comment_date|timesince}} ago</span> 
+                     
+               <br>
+               <br>
+               <div>
+                <h4>{{comment.text}}</h4>
+
+                </div>
+                
+                
+                {% if request.user == comment.userId %}
+                <div class="post__top__right" >
+                    <a href="{% url 'deletecomment' comment.id %}" style="text-decoration: none; color:grey" title="Delete">
+                        <span class="material-icons"> delete</span>
+                    </a>
+
+                </div>
+                {% endif %}
+             
+            </div>
+            
+        </div>
+    
+    </div>
+    
+        {% endfor %}
+
+        <form action="" method="POST">
+            {% csrf_token %}
+        
+                <input type="text" name="text">
+        
+                <button type="submit">comment</button>
+            </form>
+      
+    </div>
+    </div>
+
+</body>
+</html>
+
+
+

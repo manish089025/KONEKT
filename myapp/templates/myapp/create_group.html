@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Group</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/post.css' %}" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<body>
+    <div class="d-inline-block align-text-top logo-design">
+        <h4 class="heading-text">KONEKT</h4>
+     
+    </div>
+    <section class="container forms">
+        <div class="form login">
+            <div class="form-content">
+                <header>New Group</header>
+                <form action="" method="POST" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+                    <div class="field input-field">
+                        <p>
+                            <label for="file" style="cursor: pointer">Group Profile</label>
+                            <span class="material-symbols-outlined"> upload </span>
+                        </p>
+                        <input type="file" accept="image/gif, image/jpeg, image/png" name="image" id="file"
+                            onchange="loadFile(event)" style="display: none" />
+
+                    </div>
+                    <img id="output"   width="100%" />
+                    <div class="field input-field">
+                        <div>Group name</div>
+                        <input name="name" type="GroupName" placeholder="Group Name" class="input" />
+
+                    </div>
+
+                    <br>
+                    <div class="field input-field">
+                        <div>Description</div>
+                        <input name="description" type="desc" placeholder="Description" class="input" />
+                    </div>
+
+                     
+                    <div>
+                        <br>
+                     <label for="is_public">Is_public</label>
+                        <select name="is_public" class="field input_field" >
+                            
+                            <option  value="True" >True</option>
+                            <option  value="False" >False</option>
+                         
+                        </select>
+                    </div>
+                    <div class="field button-field">
+                        <button>Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/post.js' %}"></script>
+</body>
+
+</html>

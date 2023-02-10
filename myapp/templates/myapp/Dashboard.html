@@ -1,0 +1,145 @@
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KONEKT</title>
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- header starts -->
+    <div class="header">
+  
+        <div   class="header__left">
+          <a href="/" class="anchor"> <h2 class="header-text">KONEKT</h2> </a> 
+        </div> 
+
+        {% include 'filter.html' %}
+
+        {% if request.user == user %}
+        <div class="header__right">
+            <div class="header__input">
+               <a href="{% url 'Notification' user.id %}">        <span class="material-icons">notifications </span></a>
+        </div>
+
+        </div>
+       {% endif %} 
+        <div class="header__right">
+     
+
+        </div>
+    </div>
+    <!-- header ends -->
+
+    <!-- main body starts -->
+    <div class="main__body">
+        <!-- sidebar starts -->
+        <div class="sidebar">
+            <div class="sidebarRow">
+                <img  style="width: 250px" class="profile__avatar"
+                   src="{{user.avatar.url}}"
+                    alt="" />
+            </div>
+            <div class="sidebarRow ">
+                <h4>{{user.username}}</h4>
+            </div>
+              
+            {% if request.user.id == user.id %} 
+            <div class="sidebarRow">
+                
+                <a href="{% url 'createpost'  %}" style="text-decoration: none;"><button type="" class="btn">Add Post</button></a>
+                
+            </div>
+
+            <div class="sidebarRow">
+                <a href="{% url 'creategroup' request.user.id %}" style="text-decoration: none;"><button type=" button" class="btn">New Group</button></a>
+            </div>
+          {% endif %}
+
+            {% if request.user == user %}
+            <div class="sidebarRow">
+                <span class="material-icons"> edit</span>
+                <a href="{% url 'updateuser' user.id %}" class="anchor"> <h4>Update User </h4></a></div>
+
+            {% endif %}
+          {% if request.user.id != user.id and is_follow|length == 0  %}
+          
+         
+     
+           <div class="sidebarRow">
+           
+            <span class="material-icons"> personadd</span>
+           <a href="{% url 'send_request' user.id %}" class="anchor"> <h4>follow </h4></a>
+
+            </div>
+         
+        {% elif request.user.id != user.id %}
+        <div class="sidebarRow">
+            <span class="material-icons"> removeperson</span>
+        <a href="{% url 'unfollow' user.id %}" class="anchor"><h4>unfollow</h4></a>
+    </div>
+           {% endif %}
+           <div class="sidebarRow">
+            <span class="material-icons"> people</span><a href="{% url 'followers' user.id %} " class="anchor"><h4>Followers {{followercount}}</h4></a></div>
+           <div class="sidebarRow">
+            <span class="material-icons"> face</span>
+            <a href="{% url 'following' user.id %} " class="anchor"><h4>Following {{followingcount}}</h4> </a>
+        
+        </div>
+
+      
+            <div class="sidebarRow">
+                <span class="material-icons"> groups</span>
+                <a href="{% url 'UserGroup' user.id %}" class="anchor"><h4>Groups</h4></a>
+            </div>
+         {% if request.user.id == user.id %}   
+            <div class="sidebarRow">
+                <span class="material-icons">login </span>
+
+
+                
+                <a href="{% url 'logout' %}" style="color:black; text-decoration:none;"><h4>Sign Out</h4></a>
+            </div>
+            {% endif %}
+        </div>
+       
+        <!-- sidebar ends -->
+
+        <!-- feed starts -->
+        <div class="feed">
+        <!-- post starts -->
+             {% for post in posts %} 
+             {% if post.userId %}
+     
+                 
+               
+                {% include 'postmaterial.html' %}
+              
+           
+        
+            
+                        {% endif %}
+            {% endfor %}
+            <!-- posts end -->
+        </div>
+       <!-- feed end -->
+
+
+
+
+    <!-- left side bar starts -->
+    {% include 'sidebar.html' %}
+    </div>
+    <!-- left side bar end -->
+    <!-- main body ends -->
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v10.0"
+        nonce="zUxEq08J"></script>
+</body>
+
+</html>
